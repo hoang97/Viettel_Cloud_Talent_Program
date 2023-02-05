@@ -55,7 +55,50 @@ Ban đầu, **OpenStack** được phát triển bởi **NASA** và **Rackspace*
 
 ### 2. Kolla <a name='kolla'></a>
 
+**Openstack Kolla** là Project hay công cụ sử dụng để triển khai, vận hành **Openstack**. **Kolla** được phát hành từ phiên bản `Kilo` và chính thức trở thành Project Openstack tại phiên bản `Liberty`.
+
+Với ý tưởng của **Project Kolla** là triển khai **Openstack** trong môi trường `Container`, tự động triển khai **Openstack** bằng Kolla Ansible. Qua đó chỉ với 1 vài thao tác, chúng ta đã có môi trường **Openstack** để sử dụng. Hơn nữa, **Project Kolla** cũng cung cấp sẵn các giải pháp về giám sát, HA, Rolling Upgrades … cho **Openstack**
+
+<div align="center">
+  <img width="300" src="imgs/Kolla_logo.png" alt="OpenStack logo">
+</div>
+
+<div align="center">
+  <i>Pic. 2 - Kolla logo</i>
+</div>
+
+**Kolla** gồm có 3 dự án chính:
+
+- `Kolla-ansible`: triển khai các container của Kolla bằng Ansible
+- `Kayobe`: triển khai OpenStack control plane trên máy bare metal sử dụng Kolla-ansible và Bifrost
+- `Ansible-collection-kolla`: cung cấp các ứng dụng Ansible phổ biến được sử dụng bởi các dự án Kolla
+
+**Kolla** cũng có các phiên bản stable tương ứng với **OpenStack**.
+
+*Table 2 - Kolla and OpenStack Last Releases*
+| Kolla Series | OpenStack Series |
+|--------------|------------------|
+| `15.1.x.x` | `lastest` |
+| `15.0.x.x` | Zed |
+| `14.x.x` | Yoga | 
+| `13.x.x` | Xena | 
+| `12.x.x` | Wallaby | 
+
 ### 3. Ansible <a name='ansible'></a>
+
+**Ansible** là một trong những công cụ quản lý cấu hình hiện đại, nó tạo điều kiện thuận lợi cho công việc cài đặt, quản lý và bảo trì các server từ xa, với thiết kế tối giản giúp người dùng cài đặt và chạy nhanh chóng.
+
+<div align="center">
+  <img width="300" src="imgs/Ansible_logo.png" alt="OpenStack logo">
+</div>
+
+<div align="center">
+  <i>Pic. 3 - Ansible logo</i>
+</div>
+
+**Ansible** sử dụng kiến trúc `agentless` không cần đến agent để giao tiếp với các máy khác. Cơ bản nhất là giao tiếp thông qua các giao thức `WinRM` trên Windows, `SSH` trên Linux hoặc giao tiếp qua chính `API` của thiết bị đó cung cấp.
+
+Để hiểu và áp dụng **Ansible** một cách hiệu quả, các bạn cần nắm rõ một số thuật ngữ được sử dụng như: ***Controller Machine***, ***Inventory***, ***Playbook***, ***Task***, ***Module***, ***Role***, ***Play***, ***Facts***, ***Handlers***, ***Variables***, ***Conditions***
 
 ---
 ## II. System requirements <a name='requirements'></a>
@@ -86,3 +129,8 @@ Ban đầu, **OpenStack** được phát triển bởi **NASA** và **Rackspace*
 ---
 ## V. References
 <a name='references'></a>
+https://docs.openstack.org/kolla-ansible/latest/user/quickstart.html
+
+https://news.cloud365.vn/openstack-kolla-phan-1-huong-dan-cai-dat-openstack-train-all-in-one-bang-kolla-ansible/
+
+https://docs.openstack.org/kolla/latest/

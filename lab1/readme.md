@@ -60,7 +60,7 @@ Ban đầu, **OpenStack** được phát triển bởi **NASA** và **Rackspace*
 Với ý tưởng của **Project Kolla** là triển khai **Openstack** trong môi trường `Container`, tự động triển khai **Openstack** bằng Kolla Ansible. Qua đó chỉ với 1 vài thao tác, chúng ta đã có môi trường **Openstack** để sử dụng. Hơn nữa, **Project Kolla** cũng cung cấp sẵn các giải pháp về giám sát, HA, Rolling Upgrades … cho **Openstack**
 
 <div align="center">
-  <img width="300" src="imgs/Kolla_logo.png" alt="OpenStack logo">
+  <img width="300" src="imgs/kolla_logo.png" alt="OpenStack logo">
 </div>
 
 <div align="center">
@@ -89,7 +89,7 @@ Với ý tưởng của **Project Kolla** là triển khai **Openstack** trong m
 **Ansible** là một trong những công cụ quản lý cấu hình hiện đại, nó tạo điều kiện thuận lợi cho công việc cài đặt, quản lý và bảo trì các server từ xa, với thiết kế tối giản giúp người dùng cài đặt và chạy nhanh chóng.
 
 <div align="center">
-  <img width="300" src="imgs/Ansible_logo.png" alt="OpenStack logo">
+  <img width="300" src="imgs/ansible_logo.png" alt="OpenStack logo">
 </div>
 
 <div align="center">
@@ -98,10 +98,27 @@ Với ý tưởng của **Project Kolla** là triển khai **Openstack** trong m
 
 **Ansible** sử dụng kiến trúc `agentless` không cần đến agent để giao tiếp với các máy khác. Cơ bản nhất là giao tiếp thông qua các giao thức `WinRM` trên Windows, `SSH` trên Linux hoặc giao tiếp qua chính `API` của thiết bị đó cung cấp.
 
-Để hiểu và áp dụng **Ansible** một cách hiệu quả, các bạn cần nắm rõ một số thuật ngữ được sử dụng như: ***Controller Machine***, ***Inventory***, ***Playbook***, ***Task***, ***Module***, ***Role***, ***Play***, ***Facts***, ***Handlers***, ***Variables***, ***Conditions***
+Để hiểu và áp dụng **Ansible** một cách hiệu quả, các bạn cần nắm rõ một số thuật ngữ được sử dụng như: ***Controller Machine***, ***Inventory***, ***Playbook***, ***Task***, ***Module***, ***Role***, ***Play***, ***Facts***, ***Handlers***, ***Variables***, ***Conditions***.
+
+**Ansible** có 2 dự án cộng đồng chính: `Ansible community package` và `Ansible-core`
+
+*Table 3 - Compare Ansible community project*
+| Ansible community package | ansible-core |
+|---------------------------|--------------|
+| Uses new versioning (2.10, then 3.0.0) | Continues “classic Ansible” versioning (2.11, then 2.12) |
+| Follows semantic versioning rules | Does not use semantic versioning |
+| Maintains only one version at a time | Maintains latest version plus two older versions | 
+| Includes language, runtime, and selected Collections | Includes language, runtime, and builtin plugins | 
+| Developed and maintained in Collection repositories | Developed and maintained in ansible/ansible repository | 
+
+
 
 ---
 ## II. System requirements <a name='requirements'></a>
+
+Trong bài thực hành này mình sẽ sử dụng VM Ubuntu (Ubuntu 22.04 LSTM) chạy trên Virtual Box. 
+Để cài đặt phiên bản Kolla-ansible `15.1.0` cùng OpenStack `lastest` theo [hướng dẫn](https://docs.openstack.org/kolla-ansible/latest/user/quickstart.html#top) 
+
 - Suggesting
     - 8GB RAM
     - 2 network interfaces

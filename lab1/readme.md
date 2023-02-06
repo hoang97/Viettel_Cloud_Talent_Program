@@ -121,7 +121,7 @@ Với ý tưởng của **Project Kolla** là triển khai **Openstack** trong m
 ## II. System requirements <a name='requirements'></a>
 
 Trong bài thực hành này mình sẽ sử dụng VM Ubuntu (Ubuntu 22.04 LSTM) chạy trên Virtual Box. 
-Để cài đặt phiên bản Kolla-ansible `15.1.0` cùng OpenStack `lastest` theo [hướng dẫn](https://docs.openstack.org/kolla-ansible/latest/user/quickstart.html#top) cấu hình gợi ý gồm có:
+Để cài đặt phiên bản Kolla-ansible `15.1.0` cùng OpenStack `lastest`. Theo [hướng dẫn](https://docs.openstack.org/kolla-ansible/latest/user/quickstart.html#top) cấu hình gợi ý gồm có:
 
 *Table 4 - System requirements*
 | Specification | Require | Personal VM |
@@ -131,7 +131,7 @@ Trong bài thực hành này mình sẽ sử dụng VM Ubuntu (Ubuntu 22.04 LSTM
 | Disk | 2 (atleast 40 GB) |  2 (40 - 40 GB) | 
 | network | 2 NICs |  2 NICs | 
 
-Tuy nhiên do cấu hình máy có giới hạn nên cấu hình RAM chỉ giới hạn ở mức 4 GB.
+Tuy nhiên do cấu hình máy có giới hạn nên RAM chỉ giới hạn ở mức 4 GB.
 
 ---
 ## III. Deployment <a name='deployment'></a>
@@ -141,7 +141,7 @@ Tuy nhiên do cấu hình máy có giới hạn nên cấu hình RAM chỉ giớ
 Đầu tiên cần chỉnh cài đặt RAM cho VM lên 4 GB bằng cách vào `setting -> system -> Motherboard`:
 
 <div align="center">
-  <img width="300" src="imgs/1.png">
+  <img width="1000" src="imgs/1.png">
 </div>
 
 <div align="center">
@@ -151,7 +151,7 @@ Tuy nhiên do cấu hình máy có giới hạn nên cấu hình RAM chỉ giớ
 Để thay đổi số lượng nhân CPU ta chuyển sang tab `Processor`:
 
 <div align="center">
-  <img width="300" src="imgs/2.png">
+  <img width="1000" src="imgs/2.png">
 </div>
 
 <div align="center">
@@ -161,7 +161,7 @@ Tuy nhiên do cấu hình máy có giới hạn nên cấu hình RAM chỉ giớ
 Vào `setting -> Storage` sau đó ấn nút `Adds hard disk` để thêm ổ đĩa mới với dung lượng 40 GB:
 
 <div align="center">
-  <img width="300" src="imgs/3.png">
+  <img width="1000" src="imgs/3.png">
 </div>
 
 <div align="center">
@@ -171,7 +171,7 @@ Vào `setting -> Storage` sau đó ấn nút `Adds hard disk` để thêm ổ đ
 Cuối cùng để cài đặt network vào `setting -> Network`. Theo mặc định VM có sẵn 1 mạng `NAT` với IP `192.168.0.113`, cần thêm 1 mạng `Bridged Adapter` không có IP nữa:
 
 <div align="center">
-  <img width="300" src="imgs/4.png">
+  <img width="1000" src="imgs/4.png">
 </div>
 
 <div align="center">
@@ -279,7 +279,7 @@ kolla-ansible -i ./all-in-one bootstrap-servers
 Sau khi hoàn tất cài đặt sẽ có kết quả như sau:
 
 <div align="center">
-  <img width="300" src="imgs/4.png">
+  <img width="1000" src="imgs/5.png">
 </div>
 
 <div align="center">
@@ -295,7 +295,7 @@ kolla-ansible -i ./all-in-one prechecks
 Sau khi hoàn tất kiểm tra sẽ có kết quả như sau:
 
 <div align="center">
-  <img width="300" src="imgs/4.png">
+  <img width="1000" src="imgs/6.png">
 </div>
 
 <div align="center">
@@ -311,7 +311,7 @@ kolla-ansible -i ./all-in-one deploy
 Sau khi hoàn tất sẽ có kết quả như hình:
 
 <div align="center">
-  <img width="300" src="imgs/4.png">
+  <img width="1000" src="imgs/7.png">
 </div>
 
 <div align="center">
@@ -332,25 +332,84 @@ kolla-ansible post-deploy
 
 Để xem mật khẩu cho admin ta có thể xem trong đường dẫn `/etc/kolla/clouds.yaml`
 
-Sau khi đăng nhập tài khoản admin thành công sẽ có kết quả như hình dưới:
-
 <div align="center">
-  <img width="300" src="imgs/4.png">
+  <img width="1000" src="imgs/8.png">
 </div>
 
 <div align="center">
-  <i>Pic. 11 - Result after login with admin credentials</i>
+  <i>Pic. 11 - Credentials in clouds.yaml file</i>
+</div>
+
+
+Sau khi đăng nhập tài khoản admin thành công sẽ có kết quả như hình dưới:
+
+<div align="center">
+  <img width="1000" src="imgs/8.2.png">
+</div>
+
+<div align="center">
+  <i>Pic. 12 - Result after login with admin credentials</i>
 </div>
 
 ---
 ## IV. Encountered Errors
 <a name='errors'></a>
 
-- MariaDB liveness error
-- Not create volume group for Cinder LVM
-- Re-generate password after changing config file
-- Remove container before re-deploy OpenStack
-- Permission denied
+### 1. MariaDB liveness error
+
+Lỗi này xuất hiện do MariaDB không kết nối được đến Haproxy. Để khắc phục ta config thêm 1 kênh vip dành riêng cho nội bộ trong file globals.yml:
+
+```yml
+kolla_internal_vip_address: 192.168.0.113
+```
+
+### 2. Not create volume group for Cinder LVM
+
+Lỗi này xảy ra khi config LVM cho Cinder nhưng lại không tạo volume group cho ổ cứng. Cách khắc phục được chỉ ra tại [đây](https://docs.openstack.org/kolla-ansible/queens/reference/cinder-guide.html). Đối với cấu hình 2 ổ cứng sda và sdb như trong bài thực hành, cần tạo 1 volume group cho sdb:
+
+```terminal
+<WARNING ALL DATA ON /dev/sdb will be LOST!>
+
+pvcreate /dev/sdb
+vgcreate cinder-volumes /dev/sdb
+```
+
+### 3. Re-generate password after changing config file
+
+Lỗi này xuất hiện dưới dạng không thể verify `libvirt_sasl_password` khi chạy lệnh `prechecks` cho **Kolla**. Lỗi xảy ra do thay đổi config trong file globals.yml nhưng không thêm password đầy đủ. Cách đơn giản nhất là sử dụng tool có sẵn của Kolla để random password:
+
+```
+kolla-genpwd
+```
+
+### 4. Remove container before re-deploy OpenStack
+
+Lỗi này xuất hiện dưới dạng không thể restart container khi chạy lệnh `prechecks` và `deploy`. Xảy ra do sau khi `deploy` lỗi, các container vẫn hoạt động trong **Docker** gây cản trở cho lần `deploy` kế tiếp. Để giải quyết chỉ cần dừng và xóa toàn bộ container đang chạy:
+
+```
+sudo docker stop $(sudo docker ps -qa)
+sudo docker rm $(sudo docker ps -qa)
+```
+
+Có thể tham khảo tại [đây](https://docs.docker.com/engine/reference/commandline/rm/) để hiểu rõ hơn về cách Docker xóa container.
+
+### 5. Permission denied
+
+Lỗi xảy ra dưới dạng:
+
+<div align="center">
+  <img width="1000" src="imgs/10.png">
+</div>
+
+<div align="center">
+  <i>Pic. 13 - Permission denied error</i>
+</div>
+
+Nguyên nhân là do chưa cấp quyền root cho terminal. Cách khắc phục đơn giản nhất là cấp quyền cho terminal trước khi chạy:
+
+```
+sudo su
+```
 
 ---
 ## V. References
